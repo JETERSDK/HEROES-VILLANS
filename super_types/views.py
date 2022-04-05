@@ -19,7 +19,7 @@ def super_types_list(request):
          serializer.save()
          return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def super_types_detail(request, pk):
     super_types = get_object_or_404(Super_Types, pk=pk)
     if request.method == 'GET':
@@ -29,7 +29,11 @@ def super_types_detail(request, pk):
         serializer = Super_TypesSerializer(Super_Types=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)      
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        supers.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
+                
         
         
    
